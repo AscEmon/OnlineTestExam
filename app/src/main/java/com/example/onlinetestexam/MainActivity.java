@@ -1,5 +1,6 @@
 package com.example.onlinetestexam;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -8,9 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,10 +115,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     LoginProgress.setVisibility(View.GONE);
                     Intent Homepage=new Intent(MainActivity.this,HomepageActivity.class);
                     startActivity(Homepage);
+
                 }
                 else{
                     LoginProgress.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+
+
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Login Message")
+                            .setMessage("Email and Password Are Incorrect")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            clearAll();
+
+                                        }
+                                    }).show();
 
                 }
 
@@ -126,4 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+    public void clearAll(){
+        LoginEmaiText.setText("");
+        LoginPasswordText.setText("");
+    }
+
 }
