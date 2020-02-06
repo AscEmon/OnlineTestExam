@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +28,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     TextView ClickHereText;
     ProgressBar SignUpProgress;
     private FirebaseAuth mAuth;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         SignUpSubmitButton=findViewById(R.id.SubmitButton);
         ClickHereText=findViewById(R.id.ClickHereText);
         SignUpProgress=findViewById(R.id.SignUpProgressbar);
+
+        databaseReference= FirebaseDatabase.getInstance().getReference("Client: ");
+
 
 
 
@@ -76,10 +82,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     public void SignUpMethod()
     {
-        String FullName=SignUpNameText.getText().toString().trim();
-        String email=SignUpEmailText.getText().toString().trim();
+         final String FullName=SignUpNameText.getText().toString().trim();
+         final String email=SignUpEmailText.getText().toString().trim();
         String Password=SignUpPasswordText.getText().toString();
-        String Phone=SignUpPhoneNumberText.getText().toString();
+        final String Phone=SignUpPhoneNumberText.getText().toString().trim();
         String RetypePass=RetypePasswordText.getText().toString();
 
 
@@ -149,7 +155,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         if (task.isSuccessful()) {
 
                             SignUpProgress.setVisibility(View.GONE);
+                            String key = databaseReference.push().getKey();
+                            Client client=new Client(FullName,Phone);
+
+                            databaseReference.child(key).setValue(client);
+
                             Toast.makeText(getApplicationContext(),"SignUp is Successful",Toast.LENGTH_SHORT).show();
+                            ClearSignUp();
+
 
                         }
                         else {
@@ -169,10 +182,26 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
 
                     }
+
+                    private void ClearSignUp() {
+
+                        SignUpNameText.setText("");
+                        SignUpEmailText.setText("");
+                        SignUpPasswordText.setText("");
+                        SignUpPhoneNumberText.setText("");
+                        RetypePasswordText.setText("");
+
+
+
+                    }
+
+
                 });
 
 
 
 
     }
+
+
 }

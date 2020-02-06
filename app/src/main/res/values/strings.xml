@@ -3,16 +3,9 @@
     <string name="signup"><u>SignUp</u></string>
     <string name="Name">Name</string>
     <string name="AlreadyAccount">Already have an account? <u>Click Here</u></string>
-    <string name="title_activity_homepage">HomepageActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="navi_open">Open</string>
+    <string name="navi_close">Close</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+
 
 </resources>

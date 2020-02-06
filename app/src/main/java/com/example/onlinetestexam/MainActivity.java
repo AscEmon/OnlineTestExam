@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -113,8 +114,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(task.isSuccessful())
                 {
                     LoginProgress.setVisibility(View.GONE);
-                    Intent Homepage=new Intent(MainActivity.this,HomepageActivity.class);
-                    startActivity(Homepage);
+
+                    Toast.makeText(getApplicationContext(),"hiii",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this,NavigationDrawer.class);
+                    startActivity(intent);
+                    clearAll();
+
 
                 }
                 else{
