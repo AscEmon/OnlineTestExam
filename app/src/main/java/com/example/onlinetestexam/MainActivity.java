@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
+
+
 
         LoginProgress=findViewById(R.id.LoginProgressBar);
         LoginEmaiText=findViewById(R.id.EmailEdit);
@@ -113,12 +117,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(task.isSuccessful())
                 {
-                    LoginProgress.setVisibility(View.GONE);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    Toast.makeText(getApplicationContext(),"hiii",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(MainActivity.this,NavigationDrawer.class);
-                    startActivity(intent);
-                    clearAll();
+
+
+
+                    if (user != null) {
+
+                        LoginProgress.setVisibility(View.GONE);
+                        Intent intent = new Intent(MainActivity.this, NavigationDrawer.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        clearAll();
+
+                    }
+                    else {
+
+                        // User is signed out
+                        //Log.d(TAG, "onAuthStateChanged:signed_out");
+                        Toast.makeText(getApplicationContext(),"sign out ", Toast.LENGTH_SHORT).show();
+
+                    }
 
 
                 }
